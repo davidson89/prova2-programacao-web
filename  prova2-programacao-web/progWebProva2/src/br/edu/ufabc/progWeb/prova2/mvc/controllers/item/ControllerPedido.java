@@ -1,5 +1,8 @@
 package br.edu.ufabc.progWeb.prova2.mvc.controllers.item;
 
+import java.sql.Date;
+import java.util.Calendar;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -8,14 +11,23 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.edu.ufabc.progWeb.prova2.dao.BaseDAOFactory;
+import br.edu.ufabc.progWeb.prova2.model.AssocPedidoItem;
+import br.edu.ufabc.progWeb.prova2.model.Item;
 import br.edu.ufabc.progWeb.prova2.model.Pedido;
 
 @Controller
 public class ControllerPedido {
 
 	@RequestMapping("adicionaPedido")
-	public String adicionaItem(@Valid Pedido pedido, BindingResult result) {
+	public String adicionaPedido(@Valid Pedido pedido, BindingResult result) {
 		BaseDAOFactory<Pedido> pedidoDAO = new BaseDAOFactory<Pedido>(Pedido.class);
+		Date dataAtual = new Date(Calendar.getInstance().getTimeInMillis());
+		if (pedido.getStatus()) {
+			pedido.setDtFechamento(dataAtual);
+		}
+		if (pedido.getDtPedido() == null) {
+			pedido.setDtPedido(dataAtual);
+		}
 		pedidoDAO.salve(pedido);
 		return "redirect:novoPedido";
 	}
@@ -33,4 +45,26 @@ public class ControllerPedido {
 		pedidoDAO.delete(pedido);
 		return "redirect:novoPedido";
 	}
+
+	@RequestMapping("novoItemPedido")
+	public String atualizaListaPedidos(Model model) {
+		BaseDAOFactory<Item> itemDAO = new BaseDAOFactory<Item>(Item.class);
+		model.addAttribute("itens", itemDAO.findAll());
+		return "pedido/pedido";
+	}
+
+	@RequestMapping("salvaAssocItemPedido")
+	public String adicionaItem(AssocPedidoItem assocPedidoItem) {
+		BaseDAOFactory<AssocPedidoItem> assocPedidoDAO = new BaseDAOFactory<AssocPedidoItem>(AssocPedidoItem.class);
+		assocPedidoDAO.salve(assocPedidoItem);
+		return "redirect:novoItemPedido";
+	}
+
+	@RequestMapping("removeAssocItemPedido")
+	public String insereItem(AssocPedidoItem assocPedidoItem) {
+		BaseDAOFactory<AssocPedidoItem> assocPedidoDAO = new BaseDAOFactory<AssocPedidoItem>(AssocPedidoItem.class);
+		assocPedidoDAO.delete(assocPedidoItem);
+		return "redirect:novoItemPedido";
+	}
+
 }

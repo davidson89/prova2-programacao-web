@@ -21,6 +21,8 @@ import com.sun.istack.internal.NotNull;
 @Table(name="PEDIDO")
 public class Pedido implements Serializable {
 
+	private static final long serialVersionUID = -7099434527434920634L;
+
 	private Long id;
 
 	private String numeroPedido;
@@ -48,6 +50,7 @@ public class Pedido implements Serializable {
 	}
 
 	@NotNull
+	@GeneratedValue
 	@Column(name="NUM_PEDIDO", length=10, unique=true,nullable=false)
 	public String getNumeroPedido() {
 		return this.numeroPedido;

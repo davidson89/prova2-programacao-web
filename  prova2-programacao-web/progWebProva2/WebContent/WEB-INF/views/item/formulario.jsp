@@ -1,13 +1,8 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -15,7 +10,7 @@
 <style type="text/css" media="screen">
 @import url("<c:url value="/resources/styles/style.css"/>");
 </style>
-<title>Atualizar</title>
+<title>Ítens</title>
 </head>
 <body>
 	<form:errors path="item.descricao" cssStyle="color:red" />
@@ -29,11 +24,17 @@
 					<h1>Cadastro de ítens</h1>
 					<table width="1000px" class="consulta">
 						<tr style="border: 1px solid #000000;">
-							<td class="consulta">Id:<input type="text" id="id" name="id" readonly/ size="3"></td>
-							<td class="consulta">Descrição: <input type="text" id="descricao" name="descricao" size="20"/></td>
-							<td class="consulta">Preço Unitário: <input type="text" id="preco" name="preco" size="10"/></td>
-							<td align="center" class="consulta"><input type="submit" value="Salvar" style="width: 100px;height: 30px"/></td>
-							<td align="center" class="consulta"><input type="submit" value="Pesquisar" style="width: 100px;height: 30px"/></td>
+							<td width="10%" class="consulta"><b>Id:&nbsp;</b></td>
+							<td width="20%" class="consulta"><input type="text" id="id" name="id" readonly size="3"></td>
+							<td width="1%" class="consulta">&nbsp;</td>
+							<td width="10%" class="consulta"><b>Descrição:&nbsp;</b></td>
+							<td width="20%" class="consulta"><input type="text" id="descricao" name="descricao" size="20"/></td>
+							<td width="2%" class="consulta">&nbsp;</td>
+							<td width="20%" class="consulta"><b>Preço Unitário:&nbsp;</b></td>
+							<td width="20%" class="consulta"><input type="text" id="preco" name="preco" size="6"></td>
+							<td width="2%" class="consulta">&nbsp;</td>
+							<td width="8%" class="consulta" align="center"><input type="submit" value="Salvar" style="width: 100px;height: 30px"></td>
+							<td width="8%" class="consulta" align="center" ><input type="submit" value="Pesquisar" style="width: 100px;height: 30px"></td>
 						</tr>
 					</table>
 					<table align="center" width="1000px">
