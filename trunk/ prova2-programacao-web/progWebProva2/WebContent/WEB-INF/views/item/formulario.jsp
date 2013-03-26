@@ -27,9 +27,9 @@
 				<div id="body">
 					<table width="1000px">
 						<tr>
-							<td>Id: <input type="text" /></td>
-							<td>Descrição: <input type="text" /></td>
-							<td>Preço Unitário: <input type="text" /></td>
+							<td>Id: <input type="text" id="id" name="id" readonly/></td>
+							<td>Descrição: <input type="text" id="descricao" name="descricao" /></td>
+							<td>Preço Unitário: <input type="text" id="preco" name="preco"/></td>
 							<td><input type="submit" value="Salvar" /></td>
 						</tr>
 					</table>
@@ -48,7 +48,8 @@
 								<td id="descricao_${item.id}">${item.descricao}</td>
 								<td id="preco_${item.id}">${item.preco}<br></td>
 								<td><a href="remove?id=${item.id}"><img src="<c:url value="/resources/imagens/delete.png"/>"
-										style="height: 21px; width: 24px;" /></a> <a href="remove?id=${item.id}"><img
+										style="height: 21px; width: 24px;" /></a> 
+										<a href="remove?id=${item.id}"><img
 										src="<c:url value="/resources/imagens/edit.png"/>" style="height: 21px; width: 24px;" /></a></td>
 							</tr>
 						</c:forEach>
