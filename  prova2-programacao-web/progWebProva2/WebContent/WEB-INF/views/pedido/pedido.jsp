@@ -41,6 +41,7 @@
 								</select>
 							</td>
 							<td width="13%" class="consulta">&nbsp;</td>
+							<td class="consulta" align="right"><input type="submit" value="Solicitar" style="width: 100px;height: 30px"/></td>
 						</tr>
 						<tr>
 							<td class="consulta">Solicitante:&nbsp;</td>
@@ -51,7 +52,8 @@
 							
 							<td class="consulta">Valor Total:&nbsp;</td>
 							<td class="consulta" align="right"><input type="text" id="valor_total" name="valor_total" size="10"/></td>
-							<td class="consulta" align="right"><input type="submit" value="Salvar" /></td>
+							<td width="13%" class="consulta">&nbsp;</td>
+							<td class="consulta" align="right"><input type="reset" value="Limpar" style="width: 100px;height: 30px"/></td>
 						</tr>
 					</table>
 					<table align="center" width="1000px">
