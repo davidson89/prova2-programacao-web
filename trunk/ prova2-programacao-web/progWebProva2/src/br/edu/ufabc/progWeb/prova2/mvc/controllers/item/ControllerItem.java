@@ -14,7 +14,12 @@ import br.edu.ufabc.progWeb.prova2.model.Item;
 public class ControllerItem {
 	
 	@RequestMapping("adicionaItem")
-	public String adicionaItem(@Valid Item item, BindingResult result) {
+	public String adicionaItem(@Valid Item item, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			BaseDAOFactory<Item> itemDAO = new BaseDAOFactory<Item>(Item.class);
+			model.addAttribute("itens", itemDAO.findAll());
+			return "item/formulario";
+		}
 		BaseDAOFactory<Item> itemDAO = new BaseDAOFactory<Item>(Item.class);
 		itemDAO.salve(item);
 		return "redirect:novoItem";
