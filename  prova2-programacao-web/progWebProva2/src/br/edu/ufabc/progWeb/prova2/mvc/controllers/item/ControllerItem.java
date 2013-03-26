@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -24,11 +25,24 @@ public class ControllerItem {
 	private static String PADRAO_NUMERICO = "[0-9]+";
 
 	@RequestMapping("adicionaItem")
-	public String adicionaItem(@Valid Item item, BindingResult result, Model model) {
-		if(result.hasErrors()) {
+	public String adicionaItem(@Valid Item item, BindingResult result, Model model, HttpServletRequest request) {
+		if (result.hasErrors() && !result.hasFieldErrors("preco")) {
 			BaseDAOFactory<Item> itemDAO = new BaseDAOFactory<Item>(Item.class);
 			model.addAttribute("itens", itemDAO.findAll());
 			return "item/formulario";
+		}
+		String valor = request.getParameter("preco");
+		if (valor.matches("[0-9]+|[0-9]+[.][0-9]+")) {
+			item.setPreco(new Double(valor));
+		} else if (valor.matches("[0-9]+[,][0-9]+")) {
+			String[] valorVetor = new String[2];
+			valorVetor = valor.split(",");
+			String valorDoubleStr = valorVetor[0] + "." + valorVetor[1];
+			item.setPreco(new Double(valorDoubleStr));
+		}
+		if (item.getPreco() == null) {
+			result.addError(new ObjectError("preco", "Preço possui valor incorreto"));
+			return "redirect:novoItem";
 		}
 		itemDAO.salve(item);
 		return "redirect:novoItem";
