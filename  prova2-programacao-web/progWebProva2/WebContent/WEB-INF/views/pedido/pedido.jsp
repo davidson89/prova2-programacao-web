@@ -36,8 +36,8 @@
 							<td width="10%" class="consulta">Status:&nbsp;</td>
 							<td width="15%" class="consulta">
 								<select id="status" name="status" style="width:100%;" >
-									<option value="true">Finalizado</option>
 									<option value="false">Pendente</option>
+									<option value="true">Finalizado</option>
 								</select></td>
 							<td width="13%" class="consulta">&nbsp;</td>
 						</tr>

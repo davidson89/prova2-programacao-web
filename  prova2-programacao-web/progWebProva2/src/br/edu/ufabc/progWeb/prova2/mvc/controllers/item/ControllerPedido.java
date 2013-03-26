@@ -47,15 +47,22 @@ public class ControllerPedido {
 	}
 
 	@RequestMapping("novoItemPedido")
-	public String atualizaListaPedidos(Model model) {
+	public String atualizaListaPedidos(Model model, Pedido pedido) {
 		BaseDAOFactory<Item> itemDAO = new BaseDAOFactory<Item>(Item.class);
+		BaseDAOFactory<Pedido> pedidoDAO = new BaseDAOFactory<Pedido>(Pedido.class);
+		pedido = pedidoDAO.findByPk(pedido.getId());
 		model.addAttribute("itens", itemDAO.findAll());
-		return "pedido/pedido";
+		model.addAttribute("pedido", pedido);
+		return "assocPedidoItem/assocPedidoItem";
 	}
 
 	@RequestMapping("salvaAssocItemPedido")
-	public String adicionaItem(AssocPedidoItem assocPedidoItem) {
+	public String adicionaItem(Item item, Pedido pedido) {
 		BaseDAOFactory<AssocPedidoItem> assocPedidoDAO = new BaseDAOFactory<AssocPedidoItem>(AssocPedidoItem.class);
+		AssocPedidoItem assocPedidoItem = new AssocPedidoItem();
+		assocPedidoItem.setItem(item);
+		assocPedidoItem.setPedido(pedido);
+		// assocPedidoItem.setQtd(qtd);
 		assocPedidoDAO.salve(assocPedidoItem);
 		return "redirect:novoItemPedido";
 	}
