@@ -25,6 +25,7 @@
 						<tr>
 							<td width="10%" class="consulta">Id:&nbsp;</td>
 							<td width="20%"class="consulta"><input type="text" id="id" name="id" readonly size="3" value="${pedido.id}"/></td>
+							
 							<td width="10%" class="consulta">No.Pedido:&nbsp;</td>
 							<td width="20%" class="consulta"><input type="text" id="numeroPedido" name="numeroPedido" readonly size="6" value="${pedido.numeroPedido}"/>&nbsp;</td>
 
@@ -33,7 +34,8 @@
 								<select id="status" name="status" style="width:100%;">
 									<option value="${pedido.status}"><c:choose><c:when test="${pedido.status}">Finalizado</c:when><c:otherwise>Pendente</c:otherwise></c:choose></option>
 								</select></td>
-							<td width="13%" class="consulta">&nbsp;</td>
+							<td width="5%" class="consulta">&nbsp;</td>
+							<td width="10%" class="consulta" align="right"><input type="button" value="Voltar" onclick="window.location.href='novoPedido'" style="width: 100px;height: 30px"/></td>
 						</tr>
 						<tr>
 							<td class="consulta">Solicitante:&nbsp;</td>
@@ -44,6 +46,8 @@
 							
 							<td class="consulta">Valor Total:&nbsp;</td>
 							<td class="consulta" align="right"><input type="text" id="valor_total" name="valor_total" readonly size="10"/></td>
+							<td class="consulta">&nbsp;</td>
+							<td class="consulta">&nbsp;</td>
 						</tr>
 					</table>
 					<table align="center" width="1000px">
