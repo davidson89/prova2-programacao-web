@@ -22,4 +22,14 @@ public class ItemDAO extends BaseDAOFactory<Item> {
 			this.close();
 		}
 	}
+
+	public List<Item> findByValor(String preco) {
+		try {
+			return this.getSession().createCriteria(Item.class).add(Restrictions.like("preco", preco, MatchMode.START))
+					.list();
+
+		} finally {
+			this.close();
+		}
+	}
 }

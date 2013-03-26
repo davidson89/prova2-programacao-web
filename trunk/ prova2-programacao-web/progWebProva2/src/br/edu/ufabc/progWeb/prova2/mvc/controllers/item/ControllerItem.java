@@ -19,6 +19,8 @@ import br.edu.ufabc.progWeb.prova2.model.Item;
 @Controller
 public class ControllerItem {
 
+	private static ItemDAO itemDAO = new ItemDAO();
+
 	@RequestMapping("adicionaItem")
 	public String adicionaItem(@Valid Item item, BindingResult result, Model model) {
 		if(result.hasErrors()) {
@@ -26,28 +28,24 @@ public class ControllerItem {
 			model.addAttribute("itens", itemDAO.findAll());
 			return "item/formulario";
 		}
-		BaseDAOFactory<Item> itemDAO = new BaseDAOFactory<Item>(Item.class);
 		itemDAO.salve(item);
 		return "redirect:novoItem";
 	}
 
 	@RequestMapping("novoItem")
 	public String form(Model model) {
-		BaseDAOFactory<Item> itemDAO = new BaseDAOFactory<Item>(Item.class);
 		model.addAttribute("itens", itemDAO.findAll());
 		return "item/formulario";
 	}
 
 	@RequestMapping("remove")
 	public String remove(Item item) {
-		BaseDAOFactory<Item> itemDAO = new BaseDAOFactory<Item>(Item.class);
 		itemDAO.delete(item);
 		return "redirect:novoItem";
 	}
 
 	@RequestMapping(value = "/buscaItem", method = RequestMethod.POST)
-	public String form2(Item item, BindingResult result, Model model, HttpServletRequest request) {
-		ItemDAO itemDAO = new ItemDAO();
+	public String form2(Model model, HttpServletRequest request) {
 		String acao = request.getParameter("tipoBusca");
 		String valorObjetivo = request.getParameter("valorObjetivo");
 		if (acao.equals("id")) {
@@ -69,7 +67,16 @@ public class ControllerItem {
 				return "item/formulario";
 			}
 		} else if (acao.equals("valor")) {
-			model.addAttribute("itens", itemDAO.findAll());
+			List<Item> lista = new ArrayList<Item>();
+			if (valorObjetivo.matches("[0-9]")) {
+				lista = itemDAO.findByValor(valorObjetivo);
+			}
+			if (lista.size() == 0) {
+				return "redirect:novoItem";
+			} else {
+				model.addAttribute("itens", lista);
+				return "item/formulario";
+			}
 		}
 		return "item/formulario";
 	}
