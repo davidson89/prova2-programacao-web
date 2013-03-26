@@ -26,32 +26,32 @@
 			</div>
 			<div id="main">
 				<div id="body">
-					<table width="1000px">
-						<tr>
-							<td>Id: <input type="text" id="id" name="id" readonly/></td>
-							<td>Descrição: <input type="text" id="descricao" name="descricao" /></td>
-							<td>Preço Unitário: <input type="text" id="preco" name="preco"/></td>
-							<td><input type="submit" value="Salvar" /></td>
+					<h1>Cadastro de ítens</h1>
+					<table width="1000px" class="consulta">
+						<tr style="border: 1px solid #000000;">
+							<td class="consulta">Id:<input type="text" id="id" name="id" readonly/ size="3"></td>
+							<td class="consulta">Descrição: <input type="text" id="descricao" name="descricao" size="20"/></td>
+							<td class="consulta">Preço Unitário: <input type="text" id="preco" name="preco" size="10"/></td>
+							<td align="center" class="consulta"><input type="submit" value="Salvar" style="width: 100px;height: 30px"/></td>
+							<td align="center" class="consulta"><input type="submit" value="Pesquisar" style="width: 100px;height: 30px"/></td>
 						</tr>
 					</table>
 					<table align="center" width="1000px">
 						<tr>
-							<td width="3%"><b>Selecione</b></td>
-							<td width="3%"><b>Id</b></td>
+							<td width="3%" align="center"><b>Selecione</b></td>
+							<td width="3%" align="center"><b>Id</b></td>
 							<td width="25%"><b>Descrição</b></td>
-							<td width="10%"><b>Preço</b></td>
-							<td width="5%"><b>Ação</b></td>
+							<td width="10%" align="center"><b>Preço</b></td>
+							<td width="5%" align="center"><b>Ação</b></td>
 						</tr>
 						<c:forEach items="${itens}" var="item" varStatus="contador">
 							<tr id="row_${item.id}" bgcolor="#${contador.count % 2 == 0 ? '99FFFF' : 'FFFF99' }">
 								<td align="center"><input type="radio" name="group1" value="${item.id}" onClick="checaRadio(value)"></td>
 								<td align="center">${item.id}</td>
 								<td id="descricao_${item.id}">${item.descricao}</td>
-								<td id="preco_${item.id}">${item.preco}<br></td>
-								<td><a href="remove?id=${item.id}"><img src="<c:url value="/resources/imagens/delete.png"/>"
+								<td id="preco_${item.id}" align="right">${item.preco}<br></td>
+								<td align="center"><a href="remove?id=${item.id}"><img src="<c:url value="/resources/imagens/delete.png"/>"
 										style="height: 21px; width: 24px;" /></a> 
-										<a href="remove?id=${item.id}"><img
-										src="<c:url value="/resources/imagens/edit.png"/>" style="height: 21px; width: 24px;" /></a></td>
 							</tr>
 						</c:forEach>
 					</table>

@@ -20,45 +20,46 @@ import com.sun.istack.internal.NotNull;
 @Entity
 @Table(name="PEDIDO")
 public class Pedido implements Serializable {
-	
+
 	private Long id;
-	
+
 	private String numeroPedido;
-	
+
 	private String solicitante;
-	
+
 	private String emailSolicitante;
-	
+
 	private Boolean status;
-	
+
 	private Date dtPedido;
-	
+
 	private Date dtFechamento;
-	
+
 	@Id
 	@Column(name="ID")
 	@GeneratedValue
+	@NotNull
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	@NotNull
 	@Column(name="NUM_PEDIDO", length=10, unique=true,nullable=false)
 	public String getNumeroPedido() {
-		return numeroPedido;
+		return this.numeroPedido;
 	}
 
 	public void setNumeroPedido(String numeroPedido) {
 		this.numeroPedido = numeroPedido;
 	}
-	
+
 	@Column(name="SOLICITANTE", length=50, nullable=false)
 	public String getSolicitante() {
-		return solicitante;
+		return this.solicitante;
 	}
 
 	public void setSolicitante(String solicitante) {
@@ -67,7 +68,7 @@ public class Pedido implements Serializable {
 
 	@Column(name="EMAIL_SOLIC")
 	public String getEmailSolicitante() {
-		return emailSolicitante;
+		return this.emailSolicitante;
 	}
 
 	public void setEmailSolicitante(String emailSolicitante) {
@@ -76,7 +77,7 @@ public class Pedido implements Serializable {
 
 	@Column(name="STATUS")
 	public Boolean getStatus() {
-		return status;
+		return this.status;
 	}
 
 	public void setStatus(Boolean status) {
@@ -85,28 +86,28 @@ public class Pedido implements Serializable {
 
 	@Column(name="DT_PEDIDO")
 	public Date getDtPedido() {
-		return dtPedido;
+		return this.dtPedido;
 	}
 
 	public void setDtPedido(Date dtPedido) {
 		this.dtPedido = dtPedido;
 	}
-	
+
 	/**
 	 * @return the dtFechamento
 	 */
 	@Column(name="DT_FECHAMENTO")
 	public Date getDtFechamento() {
-		return dtFechamento;
+		return this.dtFechamento;
 	}
-	
+
 	/**
 	 * @param dtFechamento the dtFechamento to set
 	 */
 	public void setDtFechamento(Date dtFechamento) {
 		this.dtFechamento = dtFechamento;
 	}
-	
+
 	@Transient
 	public List<AssocPedidoItem> getAssocPedidoItem() {
 		AssocPedidoItemDAO assocDAO = new AssocPedidoItemDAO();
@@ -125,5 +126,5 @@ public class Pedido implements Serializable {
 		}
 		return valorCompra;
 	}
-	
+
 }
