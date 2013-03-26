@@ -1,0 +1,6 @@
+03-24 16:03:50 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "ASSOC_PEDIDO_ITEM" not found; SQL statement:
+alter table ASSOC_PEDIDO_ITEM drop constraint FKB4326E832797A609 [42102-169]
+03-24 16:03:50 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "ASSOC_PEDIDO_ITEM" not found; SQL statement:
+alter table ASSOC_PEDIDO_ITEM drop constraint FKB4326E83F1E64165 [42102-169]
