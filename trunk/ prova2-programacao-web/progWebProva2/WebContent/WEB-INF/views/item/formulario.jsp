@@ -13,8 +13,7 @@
 <title>Ítens</title>
 </head>
 <body>
-	<form:errors path="item.descricao" cssStyle="color:red" />
-	<form action="adicionaItem" method="POST">
+	
 		<div id="wrap">
 			<div id="menu">
 				<%@ include file="/menu.jsp"%>
@@ -22,6 +21,27 @@
 			<div id="main">
 				<div id="body">
 					<h1>Cadastro de ítens</h1>
+					<form action="buscaItem" method="POST">
+					<table width="1000px" class="consulta">
+						<tr style="border: 1px solid #000000;">
+							<td width="10%" class="consulta"><b>Busca:&nbsp;</b></td>
+							<td width="50%" class="consulta" align="left"><input type="text" id="valorObjetivo" name="valorObjetivo" size="50"/></td>
+							<td width="15%" class="consulta">
+								<select id="tipoBusca" name="tipoBusca" style="width:100%;">
+									<option value="id">Id</option>
+									<option value="descricao">Descricao</option>
+									<option value="valor">Valor</option>
+								</select>
+							</td>
+							<td width="25%" class="consulta" align="right" >
+								<button onclick="window.location.href='buscaItem?descricao=descricao'" name="Pesquisar" style="width: 100px;height: 30px">Pesquisar</button>
+								<!--<input type="submit" name="Pesquisar" value="id" style="width: 100px;height: 30px">-->
+							</td>
+						</tr>
+					</table>
+					</form>
+					<form:errors path="item.descricao" cssStyle="color:red" />
+					<form action="adicionaItem" method="POST">
 					<table width="1000px" class="consulta">
 						<tr style="border: 1px solid #000000;">
 							<td width="10%" class="consulta"><b>Id:&nbsp;</b></td>
@@ -33,10 +53,12 @@
 							<td width="20%" class="consulta"><b>Preço Unitário:&nbsp;</b></td>
 							<td width="20%" class="consulta"><input type="text" id="preco" name="preco" size="6"></td>
 							<td width="2%" class="consulta">&nbsp;</td>
-							<td width="8%" class="consulta" align="center"><input type="submit" value="Salvar" style="width: 100px;height: 30px"></td>
-							<td width="8%" class="consulta" align="center" ><input type="submit" value="Pesquisar" style="width: 100px;height: 30px"></td>
+							<td width="16%" class="consulta" align="right">
+								<input type="submit" value="Salvar" style="width: 100px;height: 30px">
+							</td>
 						</tr>
 					</table>
+					</form>
 					<table align="center" width="1000px">
 						<tr>
 							<td width="3%" align="center"><b>Selecione</b></td>
@@ -59,9 +81,8 @@
 				</div>
 			</div>
 		</div>
-	</form>
+	
 	<script type="application/javascript">
-		
 		function checaRadio(name){
 			document.getElementById('id').value=name;
 			var elTableRow = document.getElementById('row_'+name);
