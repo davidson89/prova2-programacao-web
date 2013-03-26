@@ -7,5 +7,4 @@ public class PedidoDAO extends BaseDAOFactory<Pedido>{
 	public PedidoDAO() {
 		super(Pedido.class);
 	}
-
 }

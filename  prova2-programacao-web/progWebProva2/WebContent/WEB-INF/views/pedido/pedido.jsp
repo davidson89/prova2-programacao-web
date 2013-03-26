@@ -38,7 +38,8 @@
 								<select id="status" name="status" style="width:100%;" >
 									<option value="false">Pendente</option>
 									<option value="true">Finalizado</option>
-								</select></td>
+								</select>
+							</td>
 							<td width="13%" class="consulta">&nbsp;</td>
 						</tr>
 						<tr>
@@ -77,10 +78,12 @@
 								<td id="dtPedido_${pedido.dtPedido}">${pedido.dtPedido}<br></td>
 								<td id="dtFechamento_${pedido.dtFechamento}">${pedido.dtFechamento}<br></td>
 								<td id="valorTotal_"><br></td>
-								<td align="center"><a href="removePedido?id=${pedido.id}"><img src="<c:url value="/resources/imagens/delete.png"/>"
+								<td align="center">
+								<a href="novoItemPedido?id=${pedido.id}"><img src="<c:url value="/resources/imagens/edit.png"/>"
 										style="height: 21px; width: 24px;" /></a>
-										<a href="novoItemPedido?id=${pedido.id}"><img src="<c:url value="/resources/imagens/edit.png"/>"
+								<a href="removePedido?id=${pedido.id}"><img src="<c:url value="/resources/imagens/delete.png"/>"
 										style="height: 21px; width: 24px;" /></a>
+										
 								</td>
 							</tr>
 						</c:forEach>
