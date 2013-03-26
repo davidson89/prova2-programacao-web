@@ -21,6 +21,8 @@ public class ControllerItem {
 
 	private static ItemDAO itemDAO = new ItemDAO();
 
+	private static String PADRAO_NUMERICO = "[0-9]+";
+
 	@RequestMapping("adicionaItem")
 	public String adicionaItem(@Valid Item item, BindingResult result, Model model) {
 		if(result.hasErrors()) {
@@ -49,7 +51,7 @@ public class ControllerItem {
 		String acao = request.getParameter("tipoBusca");
 		String valorObjetivo = request.getParameter("valorObjetivo");
 		if (acao.equals("id")) {
-			if (valorObjetivo.matches("[0-9]+")) {
+			if (valorObjetivo.matches(PADRAO_NUMERICO)) {
 				Item itemSolicitado = itemDAO.findByPk(new Long(valorObjetivo));
 				List<Item> itens = new ArrayList<Item>();
 				itens.add(itemSolicitado);
@@ -68,8 +70,13 @@ public class ControllerItem {
 			}
 		} else if (acao.equals("valor")) {
 			List<Item> lista = new ArrayList<Item>();
-			if (valorObjetivo.matches("[0-9]+")) {
-				lista = itemDAO.findByValor(valorObjetivo);
+			if (valorObjetivo.matches("[0-9]+|[0-9]+[.][0-9]+")) {
+				lista = itemDAO.findByValor(new Double(valorObjetivo));
+			} else if (valorObjetivo.matches("[0-9]+[,][0-9]+")) {
+				String[] valorVetor = new String[2];
+				valorVetor = valorObjetivo.split(",");
+				String valorDoubleStr = valorVetor[0] + "." + valorVetor[1];
+				lista = itemDAO.findByValor(new Double(valorDoubleStr));
 			}
 			if (lista.size() == 0) {
 				return "redirect:novoItem";

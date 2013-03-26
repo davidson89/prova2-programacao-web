@@ -23,10 +23,9 @@ public class ItemDAO extends BaseDAOFactory<Item> {
 		}
 	}
 
-	public List<Item> findByValor(String preco) {
+	public List<Item> findByValor(Double preco) {
 		try {
-			return this.getSession().createCriteria(Item.class).add(Restrictions.like("preco", preco, MatchMode.START))
-					.list();
+			return this.getSession().createCriteria(Item.class).add(Restrictions.eq("preco", preco)).list();
 
 		} finally {
 			this.close();
