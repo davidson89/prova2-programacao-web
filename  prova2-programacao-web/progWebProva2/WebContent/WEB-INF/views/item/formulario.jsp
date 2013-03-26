@@ -18,6 +18,7 @@
 <title>Atualizar</title>
 </head>
 <body>
+	<form:errors path="item.descricao" cssStyle="color:red" />
 	<form action="adicionaItem" method="POST">
 		<div id="wrap">
 			<div id="menu">

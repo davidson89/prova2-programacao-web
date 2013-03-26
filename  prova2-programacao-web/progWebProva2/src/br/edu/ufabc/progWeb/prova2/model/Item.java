@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="ITEM")
@@ -14,6 +17,8 @@ public class Item implements Serializable {
 	
 	private Long id;
 	
+	@NotEmpty
+	@Size(min=2)
 	private String descricao;
 	
 	private Double preco;
