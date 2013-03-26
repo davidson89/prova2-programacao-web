@@ -68,7 +68,7 @@ public class ControllerItem {
 			}
 		} else if (acao.equals("valor")) {
 			List<Item> lista = new ArrayList<Item>();
-			if (valorObjetivo.matches("[0-9]")) {
+			if (valorObjetivo.matches("[0-9]+")) {
 				lista = itemDAO.findByValor(valorObjetivo);
 			}
 			if (lista.size() == 0) {
