@@ -34,7 +34,11 @@ public class ControllerPedido {
 	private static String PADRAO_NUMERICO = "[0-9]+";
 
 	@RequestMapping("adicionaPedido")
-	public String adicionaPedido(@Valid Pedido pedido, BindingResult result) {
+	public String adicionaPedido(@Valid Pedido pedido, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			model.addAttribute("pedidos", pedidoDAO.findAll());
+			return "pedido/pedido";
+		}
 		Date dataAtual = new Date(Calendar.getInstance().getTimeInMillis());
 		if (pedido.getStatus()) {
 			pedido.setDtFechamento(dataAtual);

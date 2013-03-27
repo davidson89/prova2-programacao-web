@@ -11,6 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import br.edu.ufabc.progWeb.prova2.dao.AssocPedidoItemDAO;
 
@@ -25,10 +29,15 @@ public class Pedido implements Serializable {
 
 	private Long id;
 
+	@Size(min=6, max=6)
+	@Pattern(regexp="^[0-9]+[0-9]+[0-9]+[0-9]+[0-9]+[0-9]$")
 	private String numeroPedido;
 
+	@NotEmpty
 	private String solicitante;
 
+	@NotEmpty
+	@Pattern(regexp="^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
 	private String emailSolicitante;
 
 	private Boolean status;

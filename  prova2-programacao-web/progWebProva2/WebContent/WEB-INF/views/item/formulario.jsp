@@ -13,6 +13,7 @@
 <title>Ítens</title>
 </head>
 <body>
+	<form:errors path="item.descricao" cssStyle="color:red" />
 	<div id="wrap">
 		<div id="menu">
 			<%@ include file="/menu.jsp"%>
@@ -39,7 +40,6 @@
 					</tr>
 				</table>
 				</form>
-				<form:errors path="item.descricao" cssStyle="color:red" />
 				<form action="adicionaItem" method="POST">
 				<table width="1000px" class="consulta">
 					<tr style="border: 1px solid #000000;">
