@@ -13,7 +13,6 @@
 <title>Associação</title>
 </head>
 <body>
-	<form action="adicionaPedidoItem" method="POST">
 		<div id="wrap">
 			<div id="menu">
 				<%@ include file="/menu.jsp"%>
@@ -21,10 +20,11 @@
 			<div id="main">
 				<div id="body">
 					<h1>Associação pedido-ítem</h1>
+						<form action="adicionaAssoc" method="POST">
 						<table width="1000px" class="consulta" style="border: 1px solid #000000;">
 						<tr>
 							<td width="10%" class="consulta">Id:&nbsp;</td>
-							<td width="20%"class="consulta"><input type="text" id="id" name="id" readonly size="3" value="${pedido.id}"/></td>
+							<td width="20%"class="consulta"><input type="text" id="idPedido" name="idPedido" readonly size="3" value="${pedido.id}"/></td>
 							
 							<td width="10%" class="consulta">No.Pedido:&nbsp;</td>
 							<td width="20%" class="consulta"><input type="text" id="numeroPedido" name="numeroPedido" readonly size="6" value="${pedido.numeroPedido}"/>&nbsp;</td>
@@ -65,9 +65,12 @@
 								<td align="center">${item.id}</td>
 								<td id="descricao_${item.id}">${item.descricao}</td>
 								<td id="preco_${item.id}" align="right">${item.preco}<br></td>
-								<td id="qtde_${item.id}" align="center" dir="rtl"><input type="text" id=quantidade name=quantidade></td>
-								<td align="center"><a href="salvaAssocItemPedido?id=${item.id}?descricao=${item.descricao}"><img src="<c:url value="/resources/imagens/clean.png"/>"
-										style="height: 21px; width: 24px;" /></a></td>
+								<td id="qtde_${item.id}" align="center" dir="rtl"><input type="text" id="quantidade_${item.id}" name="quantidade_${item.id}"></td>
+								<td align="center">
+									<input type="image" src="<c:url value="/resources/imagens/clean.png"/>" style="height: 21px; width: 24px;" value="${item.id}">
+									<a href="adicionaAssoc?id=${item.id}"><img src="<c:url value="/resources/imagens/clean.png"/>"
+										style="height: 21px; width: 24px;" /></a>
+								</td>
 							</tr>
 						</c:forEach>
 					</table>
@@ -76,10 +79,33 @@
 							<td align="right"><input type="submit" value="Solicitar"/></td>
 						</tr>
 					</table>
+					</form>
+					<!-- Lista Associações -->
+					<table align="center" width="1000px">
+						<tr>
+							<td width="3%" align="center"><b>Selecione</b></td>
+							<td width="3%" align="center"><b>Id</b></td>
+							<td width="25%"><b>Descrição</b></td>
+							<td width="10%" align="center"><b>Preço</b></td>
+							<td width="10%" align="center"><b>Quantidade</b></td>
+							<td width="5%" align="center"><b>Ação</b></td>
+						</tr>
+						<c:forEach items="${itens}" var="item" varStatus="contador">
+							<tr id="row_${item.id}" bgcolor="#${contador.count % 2 == 0 ? '99FFFF' : 'FFFF99' }">
+								<td align="center"><input type="radio" name="group1" value="${item.id}" onClick="checaRadio(value)"></td>
+								<td align="center">${item.id}</td>
+								<td id="descricao_${item.id}">${item.descricao}</td>
+								<td id="preco_${item.id}" align="right">${item.preco}<br></td>
+								<td id="qtde_${item.id}" align="center" dir="rtl"><input type="text" id=quantidade name=quantidade readonly="readonly"></td>
+								<td align="center"><a href="salvaAssocItemPedido?id=${item.id}?descricao=${item.descricao}"><img src="<c:url value="/resources/imagens/delete.png"/>"
+										style="height: 21px; width: 24px;" /></a></td>
+							</tr>
+						</c:forEach>
+					</table>
 				</div>
 			</div>
 		</div>
-	</form>
+	
 	<script type="application/javascript">
 		
 		function checaRadio(name){
