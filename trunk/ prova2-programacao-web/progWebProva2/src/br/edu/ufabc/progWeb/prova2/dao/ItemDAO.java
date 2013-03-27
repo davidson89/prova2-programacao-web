@@ -16,7 +16,7 @@ public class ItemDAO extends BaseDAOFactory<Item> {
 	public List<Item> findByDescricao(String descricao) {
 		try {
 			return this.getSession().createCriteria(Item.class)
-					.add(Restrictions.like("descricao", descricao, MatchMode.START)).list();
+					.add(Restrictions.like("descricao", descricao, MatchMode.ANYWHERE)).list();
 
 		} finally {
 			this.close();
