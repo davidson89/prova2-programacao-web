@@ -18,6 +18,9 @@
 <title>Pedido</title>
 </head>
 <body >
+	<form:errors path="pedido.solicitante" cssStyle="color:red" /><br>
+	<form:errors path="pedido.numeroPedido" cssStyle="color:red" /><br>
+	<form:errors path="pedido.emailSolicitante" cssStyle="color:red" /><br>
 	<div id="wrap">
 		<div id="menu">
 			<%@ include file="/menu.jsp"%>

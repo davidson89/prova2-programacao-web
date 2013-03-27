@@ -17,7 +17,7 @@ public class Item implements Serializable {
 	
 	private Long id;
 	
-	@NotEmpty
+	@NotEmpty(message="{item.descricao}")
 	@Size(min=2)
 	private String descricao;
 	
