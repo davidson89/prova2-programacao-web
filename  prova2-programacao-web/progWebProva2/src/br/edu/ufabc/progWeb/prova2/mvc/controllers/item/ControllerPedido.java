@@ -14,7 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import br.edu.ufabc.progWeb.prova2.dao.BaseDAOFactory;
+import br.edu.ufabc.progWeb.prova2.dao.AssocPedidoItemDAO;
 import br.edu.ufabc.progWeb.prova2.dao.ItemDAO;
 import br.edu.ufabc.progWeb.prova2.dao.PedidoDAO;
 import br.edu.ufabc.progWeb.prova2.model.AssocPedidoItem;
@@ -28,8 +28,7 @@ public class ControllerPedido {
 
 	private static ItemDAO itemDAO = new ItemDAO();
 
-	private static BaseDAOFactory<AssocPedidoItem> assocPedidoDAO = new BaseDAOFactory<AssocPedidoItem>(
-			AssocPedidoItem.class);
+	private static AssocPedidoItemDAO assocPedidoDAO = new AssocPedidoItemDAO();
 
 	private static String PADRAO_NUMERICO = "[0-9]+";
 
@@ -71,6 +70,8 @@ public class ControllerPedido {
 		pedido = pedidoDAO.findByPk(pedido.getId());
 		model.addAttribute("itens", itemDAO.findAll());
 		model.addAttribute("pedido", pedido);
+		List<AssocPedidoItem> assocs = assocPedidoDAO.findByPedido(pedido);
+		model.addAttribute("assocs", assocs);
 		return "assocPedidoItem/assocPedidoItem";
 	}
 
@@ -132,22 +133,6 @@ public class ControllerPedido {
 			} else {
 				model.addAttribute("pedidos", pedidos);
 				return "pedido/pedido";
-			}
-		} else if (acao.equals("valorTotal")) {
-			List<Item> lista = new ArrayList<Item>();
-			if (valorObjetivo.matches("[0-9]+|[0-9]+[.][0-9]+")) {
-				lista = itemDAO.findByValor(new Double(valorObjetivo));
-			} else if (valorObjetivo.matches("[0-9]+[,][0-9]+")) {
-				String[] valorVetor = new String[2];
-				valorVetor = valorObjetivo.split(",");
-				String valorDoubleStr = valorVetor[0] + "." + valorVetor[1];
-				lista = itemDAO.findByValor(new Double(valorDoubleStr));
-			}
-			if (lista.size() == 0) {
-				return "redirect:novoItem";
-			} else {
-				model.addAttribute("itens", lista);
-				return "item/formulario";
 			}
 		}
 		return "item/formulario";

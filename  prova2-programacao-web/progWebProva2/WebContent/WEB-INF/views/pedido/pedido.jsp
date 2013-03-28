@@ -39,7 +39,6 @@
 									<option value="numeroPedido">No.Pedido</option>
 									<option value="solicitante">Solicitante</option>
 									<option value="emailSolicitante">Email</option>
-									<option value="valorTotal">Valor Total</option>
 								</select>
 							</td>
 							<td width="25%" class="consulta" align="right" >
@@ -75,8 +74,8 @@
 							<td class="consulta">Email:&nbsp;</td>
 							<td class="consulta"><input type="text" id="emailSolicitante" name="emailSolicitante" size="15"/></td>
 							
-							<td class="consulta">Valor Total:&nbsp;</td>
-							<td class="consulta" align="right"><input type="text" id="valorTotal" name="valorTotal" readonly size="10"/></td>
+							<td class="consulta">&nbsp;</td>
+							<td class="consulta" align="right">&nbsp;</td>
 							<td class="consulta">&nbsp;</td>
 							<td class="consulta" align="right"><input type="submit" value="Solicitar" style="width: 100px;height: 30px"/></td>							
 						</tr>
@@ -118,8 +117,14 @@
 							<td id="dtFechamento_${pedido.dtFechamento}">${pedido.dtFechamento}</td>
 							<td id="valorTotal_${pedido.id}">${pedido.valorTotalCompra}</td>
 							<td align="center">
-								<a href="novoItemPedido?id=${pedido.id}"><img src="<c:url value="/resources/imagens/edit.png"/>" style="height: 21px; width: 24px;" /></a>
-								<a href="removePedido?id=${pedido.id}"><img src="<c:url value="/resources/imagens/delete.png"/>" style="height: 21px; width: 24px;" /></a>
+								<c:choose>
+									<c:when test="${pedido.status}">
+									</c:when>
+									<c:otherwise>
+										<a href="novoItemPedido?id=${pedido.id}"><img src="<c:url value="/resources/imagens/edit.png"/>" style="height: 21px; width: 24px;"align="left"></a>
+									</c:otherwise>
+								</c:choose>
+								<a href="removePedido?id=${pedido.id}"><img src="<c:url value="/resources/imagens/delete.png"/>" style="height: 21px; width: 24px;" align="right"/></a>
 							</td>
 						</tr>
 					</c:forEach>

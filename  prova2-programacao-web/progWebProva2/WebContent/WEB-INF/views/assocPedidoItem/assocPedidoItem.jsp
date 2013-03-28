@@ -45,7 +45,7 @@
 							<td class="consulta"><input type="text" id="emailSolicitante_2" name="emailSolicitante_2" readonly size="20" value="${pedido.emailSolicitante}"/></td>
 							
 							<td class="consulta">Valor Total:&nbsp;</td>
-							<td class="consulta" align="right"><input type="text" id="valorTotal" name="valorTotal_2" readonly size="10"/></td>
+							<td class="consulta" align="right"><input type="text" id="valorTotal" name="valorTotal_2" readonly size="10" value="${pedido.valorTotalCompra}"/></td>
 							<td class="consulta">&nbsp;</td>
 							<td class="consulta">&nbsp;</td>
 						</tr>
@@ -79,11 +79,6 @@
 								<input type="hidden" id="id" name="id" value="">
 								<input type="hidden" id="qtde" name="qtde" value="">
 							</td>
-						</tr>
-					</table>
-					<table align="center" width="1000px">
-						<tr>
-							<td align="right"><input type="submit" value="Solicitar"/></td>
 						</tr>
 					</table>
 					<table width="1000px" class="consulta" style="border: 1px solid #000000;">
@@ -123,15 +118,6 @@
 			var elTableCells = elTableRow.getElementsByTagName("td");
 			document.getElementById('qtde').value=elTableCells[3].childNodes[0].value;
 		}	
-	
-		function checaRadio(name){
-			document.getElementById('id').value=name;
-			var elTableRow = document.getElementById('row_'+name);
-			var elTableCells = elTableRow.getElementsByTagName("td");
-			document.getElementById('descricao').value=elTableCells[2].textContent;
-			document.getElementById('preco').value=elTableCells[3].textContent;
-		}
-	
 	</script>
 </body>
 </html>
