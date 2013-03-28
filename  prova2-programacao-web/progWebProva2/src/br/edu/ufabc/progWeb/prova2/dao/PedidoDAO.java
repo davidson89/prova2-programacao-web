@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
+import br.edu.ufabc.progWeb.prova2.model.AssocPedidoItem;
 import br.edu.ufabc.progWeb.prova2.model.Pedido;
 
 public class PedidoDAO extends BaseDAOFactory<Pedido>{
@@ -40,5 +41,15 @@ public class PedidoDAO extends BaseDAOFactory<Pedido>{
 		} finally {
 			this.close();
 		}
+	}
+	
+	@Override
+	public void delete(Pedido persistivel) {
+		AssocPedidoItemDAO assocDAO = new AssocPedidoItemDAO();
+		List<AssocPedidoItem> assocs = assocDAO.fingByPedido(persistivel);
+		for (AssocPedidoItem assocPedidoItem : assocs) {
+			assocDAO.delete(assocPedidoItem);
+		}
+		super.delete(persistivel);
 	}
 }
