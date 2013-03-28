@@ -8,9 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import br.edu.ufabc.progWeb.prova2.dao.BaseDAOFactory;
+import br.edu.ufabc.progWeb.prova2.dao.AssocPedidoItemDAO;
 import br.edu.ufabc.progWeb.prova2.dao.ItemDAO;
 import br.edu.ufabc.progWeb.prova2.dao.PedidoDAO;
 import br.edu.ufabc.progWeb.prova2.model.AssocPedidoItem;
@@ -20,44 +19,74 @@ import br.edu.ufabc.progWeb.prova2.model.Pedido;
 @Controller
 public class ControllerAssocPedidoItem {
 
-	private static BaseDAOFactory<AssocPedidoItem> assocPedidoDAO = new BaseDAOFactory<AssocPedidoItem>(
-			AssocPedidoItem.class);
+	private static AssocPedidoItemDAO assocPedidoDAO = new AssocPedidoItemDAO();
+
+	private static PedidoDAO pedidoDAO = new PedidoDAO();
+
+	private static ItemDAO itemDAO = new ItemDAO();
+
+	private static String numeroPedido;
 
 	private static String PADRAO_NUMERICO = "[0-9]+";
 
-	@RequestMapping(value = "/adicionaAssoc", method = RequestMethod.POST)
-	public String adicionaPedido(BindingResult result, HttpServletRequest request) {
+	// private static Pedido pedido;
 
-		PedidoDAO pedidoDAO = new PedidoDAO();
-		Pedido pedido = pedidoDAO.findByPk(new Long(request.getParameter("id")));
+	@RequestMapping("adicionaAssoc")
+	public String adicionaPedido(AssocPedidoItem assocPedidoItem, BindingResult result, HttpServletRequest request,
+			Model model) {
+		numeroPedido = request.getParameter("numeroPedido_novo");
 
-		ItemDAO itemDAO = new ItemDAO();
-		List<Item> itens = itemDAO.findAll();
-		for (Item i : itens) {
-			String qtdStr = request.getParameter("quantidade_" + i.getId());
-			if (qtdStr.equals("")) {
-				return "redirect:novoAssoc";
-			}
-			AssocPedidoItem assocPedidoItem = new AssocPedidoItem();
-			assocPedidoItem.setItem(i);
-			assocPedidoItem.setPedido(pedido);
-			assocPedidoItem.setQtd(new Long(qtdStr));
-			assocPedidoDAO.salve(assocPedidoItem);
+		String idItem = request.getParameter("id");
+		String qtdeItem = request.getParameter("qtde");
+		if (qtdeItem.equals("") || !qtdeItem.matches("[0-9]+")) {
+			return "redirect:novoAssoc";
 		}
-		return "redirect:novoAssoc";
+
+		Pedido pedido = pedidoDAO.findByNumeroPedido(numeroPedido.trim());
+		Item item = itemDAO.findByPk(new Long(idItem.trim()));
+		AssocPedidoItem novoAssoc = new AssocPedidoItem();
+		novoAssoc.setItem(item);
+		novoAssoc.setPedido(pedido);
+		novoAssoc.setQtd(new Long(qtdeItem));
+		assocPedidoDAO.salve(novoAssoc);
+		List<AssocPedidoItem> assocs = assocPedidoDAO.findByPedido(pedido);
+		model.addAttribute("assocs", assocs);
+		model.addAttribute("pedido", pedido);
+		List<Item> itens = itemDAO.findAll();
+		for (int i = 0; i < assocs.size(); i++) {
+			for (Item item2 : itens) {
+				if (assocs.get(i).getItem().equals(item2)) {
+					itens.remove(item2);
+				}
+			}
+		}
+		model.addAttribute("itens", itens);
+		return "assocPedidoItem/assocPedidoItem";
 	}
 
 	@RequestMapping("novoAssoc")
 	public String form(Model model) {
-		BaseDAOFactory<AssocPedidoItem> assocPedidoDAO = new BaseDAOFactory<AssocPedidoItem>(AssocPedidoItem.class);
-		model.addAttribute("assoc", assocPedidoDAO.findAll());
+		Pedido pedido = pedidoDAO.findByNumeroPedido(numeroPedido.trim());
+		List<AssocPedidoItem> assocs = assocPedidoDAO.findByPedido(pedido);
+		model.addAttribute("assocs", assocs);
+		List<Item> itens = itemDAO.findAll();
+		for (int i = 0; i < assocs.size(); i++) {
+			for (Item item : itens) {
+				if (assocs.get(i).getItem().equals(item)) {
+					itens.remove(item);
+				}
+			}
+		}
+		model.addAttribute("itens", itens);
 		return "assocPedidoItem/assocPedidoItem";
 	}
 
 	@RequestMapping("removeAssoc")
-	public String remove(AssocPedidoItem assocPedidoItem) {
-		BaseDAOFactory<AssocPedidoItem> assocPedidoDAO = new BaseDAOFactory<AssocPedidoItem>(AssocPedidoItem.class);
+	public String remove(AssocPedidoItem assocPedidoItem, Model model) {
 		assocPedidoDAO.delete(assocPedidoItem);
+		// String numeroPedido = request.getParameter("numeroPedido_novo");
+		Pedido pedido = pedidoDAO.findByNumeroPedido(numeroPedido.trim());
+		model.addAttribute("pedido", pedido);
 		return "redirect:novoAssoc";
 	}
 }

@@ -35,7 +35,7 @@ public class ControllerPedido {
 
 	@RequestMapping("adicionaPedido")
 	public String adicionaPedido(@Valid Pedido pedido, BindingResult result, Model model) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			model.addAttribute("pedidos", pedidoDAO.findAll());
 			return "pedido/pedido";
 		}
@@ -43,8 +43,9 @@ public class ControllerPedido {
 		if (pedido.getStatus()) {
 			pedido.setDtFechamento(dataAtual);
 		}
-		Pedido solicitacao = pedidoDAO.findByPk(pedido.getId());
-		if (solicitacao.getDtPedido() == null) {
+		Pedido solicitacao = null;
+		solicitacao = pedidoDAO.findByPk(pedido.getId());
+		if (solicitacao == null) {
 			pedido.setDtPedido(dataAtual);
 		} else {
 			pedido.setDtPedido(solicitacao.getDtPedido());

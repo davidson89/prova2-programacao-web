@@ -123,7 +123,7 @@ public class Pedido implements Serializable {
 	@Transient
 	public List<AssocPedidoItem> getAssocPedidoItem() {
 		AssocPedidoItemDAO assocDAO = new AssocPedidoItemDAO();
-		return assocDAO.fingByPedido(this);
+		return assocDAO.findByPedido(this);
 	}
 
 	/**

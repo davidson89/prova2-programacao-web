@@ -24,35 +24,39 @@
 						<table width="1000px" class="consulta" style="border: 1px solid #000000;">
 						<tr>
 							<td width="10%" class="consulta">Id:&nbsp;</td>
-							<td width="20%"class="consulta"><input type="text" id="idPedido" name="idPedido" readonly size="3" value="${pedido.id}"/></td>
+							<td width="20%"class="consulta"><input type="text" id="id_novo" name="id_novo" readonly size="3" value="${pedido.id}"/></td>
 							
 							<td width="10%" class="consulta">No.Pedido:&nbsp;</td>
-							<td width="20%" class="consulta"><input type="text" id="numeroPedido" name="numeroPedido" readonly size="6" value="${pedido.numeroPedido}"/>&nbsp;</td>
+							<td width="20%" class="consulta"><input type="text" id="numeroPedido_novo" name="numeroPedido_novo" readonly size="6" value="${pedido.numeroPedido}"/>&nbsp;</td>
 
 							<td width="10%" class="consulta">Status:&nbsp;</td>
 							<td width="15%" class="consulta">
-								<select id="status" name="status" style="width:100%;">
-									<option value="${pedido.status}"><c:choose><c:when test="${pedido.status}">Finalizado</c:when><c:otherwise>Pendente</c:otherwise></c:choose></option>
+								<select id="status" name="status_novo" style="width:100%;">
+									<option value="${pedido.status}_novo"><c:choose><c:when test="${pedido.status}">Finalizado</c:when><c:otherwise>Pendente</c:otherwise></c:choose></option>
 								</select></td>
 							<td width="5%" class="consulta">&nbsp;</td>
 							<td width="10%" class="consulta" align="right"><input type="button" value="Voltar" onclick="window.location.href='novoPedido'" style="width: 100px;height: 30px"/></td>
 						</tr>
 						<tr>
 							<td class="consulta">Solicitante:&nbsp;</td>
-							<td class="consulta"><input type="text" id="solicitante" name="solicitante" readonly size="20" value="${pedido.solicitante}"/></td>
+							<td class="consulta"><input type="text" id="solicitante_2" name="solicitante_2" readonly size="20" value="${pedido.solicitante}"/></td>
 							
 							<td class="consulta">Email:&nbsp;</td>
-							<td class="consulta"><input type="text" id="emailSolicitante" name="emailSolicitante" readonly size="20" value="${pedido.emailSolicitante}"/></td>
+							<td class="consulta"><input type="text" id="emailSolicitante_2" name="emailSolicitante_2" readonly size="20" value="${pedido.emailSolicitante}"/></td>
 							
 							<td class="consulta">Valor Total:&nbsp;</td>
-							<td class="consulta" align="right"><input type="text" id="valor_total" name="valor_total" readonly size="10"/></td>
+							<td class="consulta" align="right"><input type="text" id="valorTotal" name="valorTotal_2" readonly size="10"/></td>
 							<td class="consulta">&nbsp;</td>
 							<td class="consulta">&nbsp;</td>
 						</tr>
 					</table>
+					<table width="1000px" class="consulta" style="border: 1px solid #000000;">
+						<tr>
+							<td><b>Tabela de ítens</b></td>
+						</tr>
+					</table>
 					<table align="center" width="1000px">
 						<tr>
-							<td width="3%" align="center"><b>Selecione</b></td>
 							<td width="3%" align="center"><b>Id</b></td>
 							<td width="25%"><b>Descrição</b></td>
 							<td width="10%" align="center"><b>Preço</b></td>
@@ -61,43 +65,49 @@
 						</tr>
 						<c:forEach items="${itens}" var="item" varStatus="contador">
 							<tr id="row_${item.id}" bgcolor="#${contador.count % 2 == 0 ? '99FFFF' : 'FFFF99' }">
-								<td align="center"><input type="radio" name="group1" value="${item.id}" onClick="checaRadio(value)"></td>
 								<td align="center">${item.id}</td>
 								<td id="descricao_${item.id}">${item.descricao}</td>
 								<td id="preco_${item.id}" align="right">${item.preco}<br></td>
-								<td id="qtde_${item.id}" align="center" dir="rtl"><input type="text" id="quantidade_${item.id}" name="quantidade_${item.id}"></td>
+								<td id="qtde_${item.id}" align="center" dir="rtl"><input type="text" id="quantidade_${item.id}" name="quantidade_${item.id}" onclick="insereValores(value)"></td>
 								<td align="center">
-									<input type="image" src="<c:url value="/resources/imagens/clean.png"/>" style="height: 21px; width: 24px;" value="${item.id}">
-									<a href="adicionaAssoc?id=${item.id}"><img src="<c:url value="/resources/imagens/clean.png"/>"
-										style="height: 21px; width: 24px;" /></a>
+									<input type="image" src="<c:url value="/resources/imagens/clean.png"/>" style="height: 21px; width: 24px;" value="${item.id}" onclick="insereValores(value)">
 								</td>
 							</tr>
 						</c:forEach>
+						<tr>
+							<td>
+								<input type="hidden" id="id" name="id" value="">
+								<input type="hidden" id="qtde" name="qtde" value="">
+							</td>
+						</tr>
 					</table>
 					<table align="center" width="1000px">
 						<tr>
 							<td align="right"><input type="submit" value="Solicitar"/></td>
 						</tr>
 					</table>
+					<table width="1000px" class="consulta" style="border: 1px solid #000000;">
+						<tr>
+							<td><b>Tabela de associações</b></td>
+						</tr>
+					</table>
 					</form>
 					<!-- Lista Associações -->
 					<table align="center" width="1000px">
 						<tr>
-							<td width="3%" align="center"><b>Selecione</b></td>
 							<td width="3%" align="center"><b>Id</b></td>
 							<td width="25%"><b>Descrição</b></td>
 							<td width="10%" align="center"><b>Preço</b></td>
 							<td width="10%" align="center"><b>Quantidade</b></td>
 							<td width="5%" align="center"><b>Ação</b></td>
 						</tr>
-						<c:forEach items="${itens}" var="item" varStatus="contador">
-							<tr id="row_${item.id}" bgcolor="#${contador.count % 2 == 0 ? '99FFFF' : 'FFFF99' }">
-								<td align="center"><input type="radio" name="group1" value="${item.id}" onClick="checaRadio(value)"></td>
-								<td align="center">${item.id}</td>
-								<td id="descricao_${item.id}">${item.descricao}</td>
-								<td id="preco_${item.id}" align="right">${item.preco}<br></td>
-								<td id="qtde_${item.id}" align="center" dir="rtl"><input type="text" id=quantidade name=quantidade readonly="readonly"></td>
-								<td align="center"><a href="salvaAssocItemPedido?id=${item.id}?descricao=${item.descricao}"><img src="<c:url value="/resources/imagens/delete.png"/>"
+						<c:forEach items="${assocs}" var="assoc" varStatus="contador">
+							<tr id="rows_${assoc.id}" bgcolor="#${contador.count % 2 == 0 ? '99FFFF' : 'FFFF99' }">
+								<td align="center">${assoc.id}</td>
+								<td id="descricao_${assoc.id}">${assoc.item.descricao}</td>
+								<td id="preco_${assoc.id}" align="right">${assoc.item.preco}<br></td>
+								<td id="qtde_${assoc.id}" align="center" dir="rtl"><input type="text" id=quantidade name=quantidade readonly="readonly" value="${assoc.qtd}"></td>
+								<td id="rem_${assoc.id}" align="center"><a href="removeAssoc?id=${assoc.id}"><img src="<c:url value="/resources/imagens/delete.png"/>"
 										style="height: 21px; width: 24px;" /></a></td>
 							</tr>
 						</c:forEach>
@@ -107,7 +117,13 @@
 		</div>
 	
 	<script type="application/javascript">
-		
+		function insereValores(name){
+			document.getElementById('id').value=name;
+			var elTableRow = document.getElementById('row_'+name);
+			var elTableCells = elTableRow.getElementsByTagName("td");
+			document.getElementById('qtde').value=elTableCells[3].childNodes[0].value;
+		}	
+	
 		function checaRadio(name){
 			document.getElementById('id').value=name;
 			var elTableRow = document.getElementById('row_'+name);
