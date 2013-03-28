@@ -15,20 +15,20 @@ import javax.persistence.Transient;
 @Entity
 @Table(name="ASSOC_PEDIDO_ITEM")
 public class AssocPedidoItem implements Serializable {
-	
+
 	private Long id;
-	
+
 	private Pedido pedido;
-	
+
 	private Item item;
-	
+
 	private Long qtd;
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name="ID")
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(Long id) {
@@ -38,7 +38,7 @@ public class AssocPedidoItem implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_PEDIDO")
 	public Pedido getPedido() {
-		return pedido;
+		return this.pedido;
 	}
 
 	public void setPedido(Pedido pedido) {
@@ -48,7 +48,7 @@ public class AssocPedidoItem implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_ITEM")
 	public Item getItem() {
-		return item;
+		return this.item;
 	}
 
 	public void setItem(Item item) {
@@ -57,13 +57,13 @@ public class AssocPedidoItem implements Serializable {
 
 	@Column(name="QTD")
 	public Long getQtd() {
-		return qtd;
+		return this.qtd;
 	}
 
 	public void setQtd(Long qtd) {
 		this.qtd = qtd;
 	}
-	
+
 	/**
 	 * 
 	 * @return valor total da associação item x pedido (preço x qtd)

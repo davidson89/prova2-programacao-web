@@ -13,6 +13,7 @@ public class ItemDAO extends BaseDAOFactory<Item> {
 		super(Item.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Item> findByDescricao(String descricao) {
 		try {
 			return this.getSession().createCriteria(Item.class)
@@ -23,6 +24,7 @@ public class ItemDAO extends BaseDAOFactory<Item> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Item> findByValor(Double preco) {
 		try {
 			return this.getSession().createCriteria(Item.class).add(Restrictions.eq("preco", preco)).list();

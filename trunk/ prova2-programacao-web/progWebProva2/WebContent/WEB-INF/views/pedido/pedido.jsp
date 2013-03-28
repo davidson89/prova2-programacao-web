@@ -18,9 +18,6 @@
 <title>Pedido</title>
 </head>
 <body >
-	<form:errors path="pedido.solicitante" cssStyle="color:red" /><br>
-	<form:errors path="pedido.numeroPedido" cssStyle="color:red" /><br>
-	<form:errors path="pedido.emailSolicitante" cssStyle="color:red" /><br>
 	<div id="wrap">
 		<div id="menu">
 			<%@ include file="/menu.jsp"%>
@@ -28,6 +25,9 @@
 		<div id="main">
 			<div id="body">
 				<h1>Cadastro de Pedidos</h1>
+				<form:errors path="pedido.solicitante" cssStyle="color:red" /><br>
+				<form:errors path="pedido.numeroPedido" cssStyle="color:red" /><br>
+				<form:errors path="pedido.emailSolicitante" cssStyle="color:red" /><br>
 				<form action="buscaPedido" method="POST">
 					<table width="1000px" class="consulta">
 						<tr style="border: 1px solid #000000;">
@@ -40,8 +40,6 @@
 									<option value="solicitante">Solicitante</option>
 									<option value="emailSolicitante">Email</option>
 									<option value="valorTotal">Valor Total</option>
-									<option value="dtAbertura">Data Abertura</option>
-									<option value="dtFechamento">Data Fechamento</option>
 								</select>
 							</td>
 							<td width="25%" class="consulta" align="right" >
@@ -78,7 +76,7 @@
 							<td class="consulta"><input type="text" id="emailSolicitante" name="emailSolicitante" size="15"/></td>
 							
 							<td class="consulta">Valor Total:&nbsp;</td>
-							<td class="consulta" align="right"><input type="text" id="valor_total" name="valor_total" size="10"/></td>
+							<td class="consulta" align="right"><input type="text" id="valorTotal" name="valorTotal" readonly size="10"/></td>
 							<td class="consulta">&nbsp;</td>
 							<td class="consulta" align="right"><input type="submit" value="Solicitar" style="width: 100px;height: 30px"/></td>							
 						</tr>
@@ -118,7 +116,7 @@
 							</td>
 							<td id="dtPedido_${pedido.dtPedido}">${pedido.dtPedido}</td>
 							<td id="dtFechamento_${pedido.dtFechamento}">${pedido.dtFechamento}</td>
-							<td id="valorTotal_"></td>
+							<td id="valorTotal_${pedido.id}">${pedido.valorTotalCompra}</td>
 							<td align="center">
 								<a href="novoItemPedido?id=${pedido.id}"><img src="<c:url value="/resources/imagens/edit.png"/>" style="height: 21px; width: 24px;" /></a>
 								<a href="removePedido?id=${pedido.id}"><img src="<c:url value="/resources/imagens/delete.png"/>" style="height: 21px; width: 24px;" /></a>

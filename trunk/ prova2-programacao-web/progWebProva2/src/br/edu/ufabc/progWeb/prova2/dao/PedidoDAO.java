@@ -42,11 +42,11 @@ public class PedidoDAO extends BaseDAOFactory<Pedido>{
 			this.close();
 		}
 	}
-	
+
 	@Override
 	public void delete(Pedido persistivel) {
 		AssocPedidoItemDAO assocDAO = new AssocPedidoItemDAO();
-		List<AssocPedidoItem> assocs = assocDAO.fingByPedido(persistivel);
+		List<AssocPedidoItem> assocs = assocDAO.findByPedido(persistivel);
 		for (AssocPedidoItem assocPedidoItem : assocs) {
 			assocDAO.delete(assocPedidoItem);
 		}

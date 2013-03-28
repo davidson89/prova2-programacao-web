@@ -3,7 +3,6 @@ package br.edu.ufabc.progWeb.prova2.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
 import br.edu.ufabc.progWeb.prova2.model.AssocPedidoItem;
@@ -15,13 +14,14 @@ public class AssocPedidoItemDAO extends BaseDAOFactory<AssocPedidoItem> {
 		super(AssocPedidoItem.class);
 	}
 
-	public List<AssocPedidoItem> fingByPedido(Pedido pedido) {
+	@SuppressWarnings("unchecked")
+	public List<AssocPedidoItem> findByPedido(Pedido pedido) {
 		try {
-			Criteria criteria = this.getSession().createCriteria(Pedido.class);
+			Criteria criteria = this.getSession().createCriteria(AssocPedidoItem.class);
 			criteria.add(Restrictions.eq("pedido", pedido));
 			return criteria.list();
 		} finally {
-			close();
+			this.close();
 		}
 	}
 }
